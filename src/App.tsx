@@ -48,7 +48,11 @@ function App() {
   const openInfoWindow = useCallback(() => {
     setIsInfoWindowOpened(!isInfoWindowOpened)
   }, [isInfoWindowOpened])
-  
+
+  // make info window render after marker rendered
+  const renderInfoWindow = useCallback(() => {
+    setIsInfoWindowOpened(true)
+  },[setIsInfoWindowOpened])
 
   return isLoaded ? (
       <div className='map-container'> 
@@ -57,14 +61,14 @@ function App() {
         center={MAP_CENTER_POSITION}
         options={MAP_OPTIONS}
       >
-        <Marker position={MAP_CENTER_POSITION} onClick={openInfoWindow} >
+        <Marker position={MAP_CENTER_POSITION} onClick={openInfoWindow} onLoad={renderInfoWindow}>
             {isInfoWindowOpened && (
               <InfoWindow onCloseClick={() => setIsInfoWindowOpened(false)}>
-              <div className="window-info-content">
-                <p className="title">Tỉnh Thừa Thiên Huế</p>
-                <p className="description">Thừa Thiên Huế là một tỉnh ven biển nằm ở cực nam của vùng Bắc Trung Bộ, miền Trung, Việt Nam.</p>
-                <img className="image" src="/images/hue.jpg"/>
-              </div>
+                <div className="window-info-content">
+                  <p className="title">Tỉnh Thừa Thiên Huế</p>
+                  <p className="description">Thừa Thiên Huế là một tỉnh ven biển nằm ở cực nam của vùng Bắc Trung Bộ, miền Trung, Việt Nam.</p>
+                  <img className="image" src="/images/hue.jpg"/>
+                </div>
             </InfoWindow>
             )}
           </Marker>
